@@ -1,7 +1,3 @@
-data "local_file" "foo" {
-    filename = "${path.module}/name_tag.txt"
-}
-
 data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "main" {
@@ -9,7 +5,9 @@ resource "aws_s3_bucket" "main" {
   acl    = "private"
 
   tags = {
-    Name        = file(data.local_file.foo)
+    Name        = var.file_location
     Environment = "Dev"
   }
 }
+
+variable "file_location" {}
